@@ -1,0 +1,312 @@
+<div id="splash" class="splash" role="dialog" aria-modal="true" aria-labelledby="splashTitle">
+  <div class="splash-glow" aria-hidden="true"></div>
+  <div class="splash-inner">
+    <svg class="sprout" viewBox="0 0 240 250" aria-hidden="true">
+      <g class="roots" fill="none" stroke-linecap="round">
+        <path class="draw" style="--len:60;--d:.1s" d="M120 232 C108 236 96 237 82 240"/>
+        <path class="draw" style="--len:60;--d:.15s" d="M120 232 C133 236 146 237 160 240"/>
+        <path class="draw" style="--len:40;--d:.2s" d="M120 232 C116 240 112 244 106 248"/>
+      </g>
+      <g class="wood" fill="none" stroke-linecap="round">
+        <path class="draw trunk" style="--len:170;--d:.3s" d="M120 232 C120 200 117 180 120 150 C123 120 118 100 120 70"/>
+        <path class="draw" style="--len:60;--d:.9s" d="M120 150 C104 140 92 128 80 108"/>
+        <path class="draw" style="--len:60;--d:1s" d="M120 132 C138 120 150 108 163 90"/>
+        <path class="draw" style="--len:50;--d:1.1s" d="M120 108 C108 96 101 84 97 64"/>
+        <path class="draw" style="--len:50;--d:1.15s" d="M120 98 C132 88 140 76 143 56"/>
+        <path class="draw" style="--len:34;--d:1.25s" d="M80 108 C70 102 62 94 57 82"/>
+        <path class="draw" style="--len:34;--d:1.3s" d="M163 90 C173 84 180 74 184 62"/>
+      </g>
+      <g class="canopy">
+        <circle style="--d:1.35s" cx="120" cy="66" r="31.2"/>
+        <circle style="--d:1.42s" cx="95" cy="60" r="24.7"/>
+        <circle style="--d:1.48s" cx="146" cy="54" r="24.7"/>
+        <circle style="--d:1.54s" cx="79" cy="96" r="22.1"/>
+        <circle style="--d:1.6s" cx="165" cy="84" r="22.1"/>
+        <circle style="--d:1.66s" cx="57" cy="80" r="15.6"/>
+        <circle style="--d:1.7s" cx="185" cy="60" r="15.6"/>
+        <circle style="--d:1.76s" cx="121" cy="38" r="22.1"/>
+        <circle style="--d:1.82s" cx="104" cy="88" r="18.2"/>
+        <circle style="--d:1.88s" cx="139" cy="88" r="18.2"/>
+      </g>
+    </svg>
+    <p class="kicker">West Bengal · algorithmic species suitability</p>
+    <h1 class="splash-title" id="splashTitle"><span>Bengal</span> <span>Planting</span> <span>Atlas</span></h1>
+    <p class="bn-title" lang="bn">বাংলার বৃক্ষরোপণ মানচিত্র</p>
+    <p class="splash-lede">Choose any place in the state. The atlas reads its rain, heat, soil and water, then names the tree, shrub and ground cover that will hold there, and the day to plant them.</p>
+    <div class="splash-actions">
+      <button id="enter" class="btn big" type="button">Enter the atlas</button>
+      <button id="enterQuiet" class="linkbtn" type="button">Enter without sound</button>
+    </div>
+    <p class="splash-note" id="splashNote">A soft ambient score plays inside. Adjust or mute it any time, top right.</p>
+  </div>
+</div>
+
+<canvas id="fxcanvas" class="fxcanvas" aria-hidden="true"></canvas>
+
+<header class="topbar" id="topbar">
+  <div class="progress" id="progress"></div>
+  <a class="brand" href="#top" aria-label="Bengal Planting Atlas, back to top">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29 C16 22 16 17 16 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M16 17 C9 16 6 11 6 5 C12 5 16 9 16 17Z" fill="currentColor" opacity=".85"/><path d="M16 14 C22 13 26 9 26 3 C20 3 16 7 16 14Z" fill="currentColor" opacity=".6"/></svg>
+    <span>Bengal Planting Atlas</span>
+  </a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#palette">Palette</a><a href="#site-sec">Site</a><a href="#ahp-sec">Weights</a><a href="#species-sec">Species</a><a href="#layout-sec">Layout</a><a href="#window-sec">Window</a><a href="#air-sec">Air and carbon</a><a href="#contact">Contact</a>
+  </nav>
+  <div class="sound" id="sound">
+    <button id="sndToggle" class="sndbtn" type="button" aria-label="Play music" aria-pressed="false">
+      <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    </button>
+    <span class="sndstate" id="sndState">Ambient off</span>
+    <label for="sndVol" class="sr">Music volume</label>
+    <input id="sndVol" class="vol" type="range" min="0" max="100" value="40">
+    <span class="volnum mono" id="volNum" aria-hidden="true">40</span>
+  </div>
+</header>
+
+<div class="wrap" id="top">
+  <section class="hero reveal">
+    <div class="hero-text">
+      <p class="kicker">West Bengal · algorithmic species suitability</p>
+      <h1>Bengal Planting Atlas</h1>
+      <p class="bn-title" lang="bn">বাংলার বৃক্ষরোপণ মানচিত্র</p>
+      <p class="hero-lede">Pick any point in West Bengal. The engine fetches its rainfall, heat, soil, drainage, salinity, slope and frost profile, weighs them by AHP, scores every native species on a Species Suitability Index, and returns a planted layout with the date to plant.</p>
+      <p class="cite">After <b>Chatterjee, S.</b> Algorithmic Landscape Development in the Subcontinent: a Python-GIS framework for automated species suitability indexing and spatial planting optimisation. Jadavpur University, Kolkata.</p>
+      <div class="counters">
+        <div><span class="n mono" id="cSpecies" data-count="0">0</span><span class="l">native and naturalised species</span></div>
+        <div><span class="n mono" id="cDistricts" data-count="0">0</span><span class="l">districts mapped</span></div>
+        <div><span class="n mono" id="cStations" data-count="0">0</span><span class="l">climate and soil grid points</span></div>
+        <div><span class="n mono" id="cCriteria" data-count="0">0</span><span class="l">AHP criteria</span></div>
+      </div>
+    </div>
+    <aside class="live" aria-live="polite">
+      <p class="eyebrow">Now reading</p>
+      <div class="live-place"><span id="liveDistrict">Kolkata</span></div>
+      <p class="live-zone" id="liveZone">New Gangetic Alluvial</p>
+      <p class="live-coord mono" id="liveCoord"></p>
+      <ul class="live-picks" id="livePicks"></ul>
+      <a class="live-go" href="#palette">See the full palette</a>
+    </aside>
+  </section>
+
+  <div class="pipeline reveal" id="pipeline" aria-label="Processing pipeline">
+    <div class="step"><div class="k"><i></i>1 Coordinate input</div><div class="v"></div></div>
+    <div class="step"><div class="k"><i></i>2 Spatial fetch</div><div class="v"></div></div>
+    <div class="step"><div class="k"><i></i>3 Attribute extraction</div><div class="v"></div></div>
+    <div class="step"><div class="k"><i></i>4 AHP weighting</div><div class="v"></div></div>
+    <div class="step"><div class="k"><i></i>5 SSI filter</div><div class="v"></div></div>
+    <div class="step"><div class="k"><i></i>6 Layout and window</div><div class="v"></div></div>
+  </div>
+
+  <div class="grid">
+    <aside class="side">
+      <div class="card mapcard">
+        <div class="maphead">
+          <p class="eyebrow">Location</p>
+          <div class="seg" role="group" aria-label="Map view">
+            <button type="button" id="view3d" class="on">Relief 3D</button>
+            <button type="button" id="view2d">Flat</button>
+          </div>
+        </div>
+        <div class="map3d" id="map3d">
+          <button type="button" class="mapreset" id="resetView" aria-label="Reset map view">Reset view</button>
+          <p class="maphint">Tap a point to choose a site · drag sideways to turn · district height follows mean elevation</p>
+        </div>
+        <div class="mapbox" id="mapbox" hidden>
+          <svg id="map" class="map" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of West Bengal districts"></svg>
+          <div class="mapcap"><span id="maphover">Click anywhere on the map</span></div>
+        </div>
+        <div class="zones" id="zones"></div>
+        <div class="fields" style="margin-top:12px">
+          <div class="field"><label for="district">District</label><select id="district"></select></div>
+          <div class="row2">
+            <div class="field"><label for="lat">Latitude</label><input class="mono" id="lat" type="number" step="0.0001" min="21.4" max="27.3"></div>
+            <div class="field"><label for="lon">Longitude</label><input class="mono" id="lon" type="number" step="0.0001" min="85.8" max="89.9"></div>
+          </div>
+          <div class="place" id="place" aria-live="polite">
+            <div class="place-main">
+              <svg class="place-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22 C12 22 5 14.5 5 9.5 A7 7 0 0 1 19 9.5 C19 14.5 12 22 12 22Z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9.5" r="2.6" fill="currentColor"/></svg>
+              <div class="place-text"><span class="place-name" id="placeName">Finding the place name</span><span class="place-detail" id="placeDetail"></span></div>
+            </div>
+            <div class="place-actions">
+              <button type="button" class="place-btn" id="placeMapBtn" aria-expanded="false" aria-controls="placeEmbed">Show on map</button>
+              <a class="place-btn" id="placeGmaps" href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+            </div>
+            <div class="place-embed" id="placeEmbed" hidden></div>
+            <p class="place-src" id="placeSrc"></p>
+          </div>
+          <div class="presets" id="presets"></div>
+          <p class="locsum note" id="locsum"></p>
+          <p class="warnline" id="outside" hidden>This point is outside the West Bengal boundary. The nearest grid station is still used.</p>
+        </div>
+      </div>
+      <div class="card">
+        <p class="eyebrow">Site</p>
+        <div class="fields">
+          <div class="row2">
+            <div class="field"><label for="area">Site area, hectares</label><input class="mono" id="area" type="number" step="0.1" min="0.1" max="50"></div>
+            <div class="field"><label for="shape">Site shape</label><select id="shape"><option value="compact">Compact block</option><option value="elongated">Elongated 2:1</option><option value="linear">Linear strip 4.5:1</option></select></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="lu">Land cover (UHI, compaction)</label><select id="lu"><option value="auto">Auto from LULC</option><option value="rural">Rural or open</option><option value="peri">Peri-urban</option><option value="urban">Dense urban core</option></select></div>
+            <div class="field"><label for="micro">Micro-topography</label><select id="micro"><option value="auto">As surveyed</option><option value="level">Level ground</option><option value="low">Low-lying depression</option><option value="high">Raised ground</option></select></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="tidal">Tidal regime</label><select id="tidal"><option value="auto">Auto</option><option value="yes">Tidal creek present</option><option value="no">No tidal influence</option></select></div>
+            <div class="field"><label for="air">Air-quality criterion</label><select id="air"><option value="auto">Auto (urban sites)</option><option value="on">Include PM10 vs APTI</option><option value="off">Exclude</option></select></div>
+          </div>
+          <div class="photos">
+            <div class="photos-head"><span class="photos-title">Site photos</span></div>
+            <div class="pgroups">
+              <div class="pgroup">
+                <label class="pdrop" data-kind="site">
+                  <input type="file" accept="image/*" multiple class="sr" id="photoSite">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="13" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 6 L10 3.8 H14 L15.5 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                  <span class="pd-t">The site</span><span class="pd-s">Tap or drop photos · <span class="pcount" data-kind="site">none yet</span></span>
+                </label>
+                <div class="thumbs" data-kind="site"></div>
+              </div>
+              <div class="pgroup">
+                <label class="pdrop" data-kind="surroundings">
+                  <input type="file" accept="image/*" multiple class="sr" id="photoSurroundings">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 19 L8 10 L12 15 L15 11 L22 19 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="17" cy="6" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                  <span class="pd-t">Surrounding region</span><span class="pd-s">Tap or drop photos · <span class="pcount" data-kind="surroundings">none yet</span></span>
+                </label>
+                <div class="thumbs" data-kind="surroundings"></div>
+              </div>
+            </div>
+            <p class="note" id="photoNote">Optional. Attach before running the schema; photos are saved with every run that follows.</p>
+          </div>
+          <button class="btn" id="run" type="button">Run planting schema</button>
+          <p class="note">Results update as you change inputs. The button replays the six-step pipeline.</p>
+          <p class="savestate" id="saveState" aria-live="polite">Checking the archive connection</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="results" id="results">
+      <section class="card reveal" id="palette">
+        <h2>Prescribed palette</h2>
+        <p class="lede">Highest Species Suitability Index in each stratum, native flora only. Bars show the normalised tolerance x<sub>ij</sub> against each site criterion; the index is their weighted sum.</p>
+        <div class="picks" id="picks"></div>
+      </section>
+
+      <section class="card reveal" id="site-sec">
+        <h2>Site environmental profile</h2>
+        <p class="lede">Attributes extracted for the coordinate. Severity chips show the stress each parameter imposes on the Saaty 1 to 9 scale that feeds the pairwise matrix.</p>
+        <div class="tiles" id="profile"></div>
+        <p class="soilline" id="soil"></p>
+      </section>
+
+      <section class="card reveal" id="ahp-sec">
+        <h2>AHP weighting and consistency</h2>
+        <p class="lede">The pairwise comparison matrix is generated from the severities above, its principal eigenvector gives the weight vector W, and the Consistency Ratio must stay under 0.10 or the matrix is renormalised.</p>
+        <div class="ahp">
+          <div><p class="eyebrow">Weight vector W</p><div class="wbars" id="wbars"></div></div>
+          <div><p class="eyebrow">Consistency</p><div class="consist" id="consist"></div><div style="margin-top:10px" id="crbadge"></div></div>
+        </div>
+        <details><summary>Pairwise matrix A and criterion severities</summary>
+          <div class="matrix" id="matrix"></div>
+          <div id="sevlist" style="margin-top:10px"></div>
+        </details>
+      </section>
+
+      <section class="card reveal" id="species-sec">
+        <h2>Ranked species by stratum</h2>
+        <p class="lede">Every species in the database scored for this site. Selected rows clear the 0.85 threshold; the limiting criterion is the one costing the most index points.</p>
+        <div class="tabs" id="tabs">
+          <button class="tab on" type="button" data-tab="tree">Trees<span class="mono"></span></button>
+          <button class="tab" type="button" data-tab="shrub">Shrubs<span class="mono"></span></button>
+          <button class="tab" type="button" data-tab="ground">Ground covers<span class="mono"></span></button>
+        </div>
+        <div class="thead-tools"><span>APTI classes: below 12 sensitive, 12 to 16 intermediate, 17 and above tolerant (Prajapati and Tripathi 2008). Carbon per stem at maturity.</span><label>Sort by <select id="sort"><option value="ssi">SSI</option><option value="apti">APTI</option><option value="carbon">Carbon per year</option></select></label></div>
+        <div class="tblwrap"><table class="rank" id="ranktable"></table></div>
+      </section>
+
+      <section class="card reveal">
+        <h2>Common plantings screened out</h2>
+        <p class="lede">Exotic species that dominate current urban planting, scored for comparison and excluded by the native-flora filter regardless of index. The framework names the first two as maladapted to waterlogged deltaic clay.</p>
+        <div class="screened" id="screened"></div>
+      </section>
+
+      <section class="card reveal" id="layout-sec">
+        <h2>Spatial layout optimisation</h2>
+        <p class="lede">Greedy non-intersecting canopy packing over a synthetic micro-DEM of the site, species mix in proportion to SSI, mature crowns never overlapping, root zones respected for the understory.</p>
+        <div class="plan">
+          <div id="plan"></div>
+          <div>
+            <p class="eyebrow">Legend</p>
+            <div class="legend" id="legend"></div>
+            <p class="note" id="floodnote" style="margin-top:12px"></p>
+          </div>
+        </div>
+        <div class="metrics" id="metrics"></div>
+        <div class="coords tblwrap" id="coords"></div>
+        <p class="note" id="coordnote"></p>
+        <div class="tools">
+          <button class="btn sm" id="copycsv" type="button">Copy coordinate matrix as CSV</button>
+          <button class="btn sm ghost" id="copygeo" type="button">Copy as GeoJSON</button>
+          <span class="toast" id="toast"></span>
+        </div>
+        <textarea class="export" id="exportbox" hidden aria-label="Export text"></textarea>
+      </section>
+
+      <section class="card reveal" id="window-sec">
+        <h2>Planting window</h2>
+        <p class="lede">Optimal dates fall 15 to 21 days before the historical mean onset of the southwest monsoon at this coordinate, so roots establish before inundation. The target sits 20 days ahead, as in the framework case study.</p>
+        <div class="cal" id="cal"></div>
+        <div class="dates" id="dates"></div>
+        <ol class="seq" id="seq"></ol>
+      </section>
+
+      <section class="card reveal" id="air-sec">
+        <h2>Air quality, carbon and compliance</h2>
+        <p class="lede">APTI values are literature-derived from Indian urban studies using the Singh and Rao method; PM10 is the indicative CPCB NAMP annual mean for the nearest monitoring city.</p>
+        <div class="aq" id="aq"></div>
+        <p class="prov">Provenance: CPCB and NGT publish guidance documents and orders, not per-species databases. APTI, dust-capture class and wood density are compiled from peer-reviewed Indian studies and the CPCB greenbelt and dust-capturing species compilations; treat them as representative ranges and replace with project measurements where available.</p>
+      </section>
+
+      <section class="card method reveal">
+        <h2>Method</h2>
+        <p>The engine follows the framework's sequential pipeline. A coordinate is projected from WGS 84 to UTM zone 45N (EPSG 32645). Environmental attributes are fetched by inverse-distance interpolation over a grid of station and survey control points covering all six agro-climatic zones of West Bengal, standing in for the IMD, Bhuvan and SRTM rasters the Python backend would query live. Land cover applies an urban heat island increment and a compaction factor; micro-topography shifts the ponding index and water table.</p>
+        <h3>Criteria and weights</h3>
+        <p>Each criterion receives a severity s<sub>i</sub> on Saaty's 1 to 9 scale from the site attributes. The pairwise matrix takes a<sub>ij</sub> from the rounded severity difference, so the judgments are discrete and the consistency check is real rather than trivially satisfied.</p>
+        <div class="eqrow"><span class="eq">A W = λ<sub>max</sub> W</span><span class="n">(1)</span></div>
+        <div class="eqrow"><span class="eq">CI = <span class="frac"><span>λ<sub>max</sub> − n</span><span>n − 1</span></span></span><span class="n">(2)</span></div>
+        <div class="eqrow"><span class="eq">CR = <span class="frac"><span>CI</span><span>RI</span></span>, matrix rejected and renormalised when CR &gt; 0.10</span><span class="n">(3)</span></div>
+        <div class="eqrow"><span class="eq">SSI<sub>j</sub> = Σ<sub>i</sub> w<sub>i</sub> · x<sub>ij</sub>, species selected when SSI<sub>j</sub> ≥ 0.85</span><span class="n">(4)</span></div>
+        <p>The principal eigenvector is found by power iteration. Random Index values follow Saaty (n = 8: 1.41, n = 9: 1.45). Tolerance x<sub>ij</sub> is 1 where a species' capacity meets the site demand and falls linearly by 1.5 times the shortfall otherwise; pH and salinity use range matches, and obligate mangroves are gated on a tidal regime. Ground covers are scored without the air criterion, which is redistributed across the other weights for that stratum.</p>
+        <h3>Layout and schedule</h3>
+        <p>Planting nodes lie on a 2 m offset grid. Trees are placed centre-out, largest crowns first, up to target counts proportional to SSI, with mature canopies separated by at least 0.5 m; shrubs fill gaps outside 55 percent of each tree's crown radius. Where the ponding index exceeds 0.55 on a non-tidal site, each tree is set on an earth mound lifting the root collar 1.2 m above the projected flood line, and DEM depressions are retained as monsoon basins. The planting window is the mean onset date minus 21 to 15 days.</p>
+        <h3>Data sources represented</h3>
+        <div class="sources">
+          <div><b>Indian Meteorological Department</b>Gridded annual rainfall normals, monsoon onset isochrones, pre-monsoon maxima and winter minima.</div>
+          <div><b>ISRO Bhuvan and NBSS&amp;LUP</b>Soil typology, baseline pH, hydraulic conductivity class, land use and land cover for UHI multipliers.</div>
+          <div><b>SRTM 30 m DEM</b>Elevation, slope and depression detection for runoff pooling and mound design. Also drives the relief heights on the 3D map.</div>
+          <div><b>CPCB NAMP and NCAP</b>Annual PM10 for monitored cities and the non-attainment list (Kolkata, Howrah, Barrackpore, Asansol, Durgapur, Raniganj, Haldia).</div>
+          <div><b>Botanical literature</b>Tolerance vectors, APTI ranges, wood density and mature dimensions for 130 native, naturalised and reference exotic species of Bengal.</div>
+          <div><b>Chave et al. 2014, IPCC 2006</b>Pan-tropical allometry, carbon fraction and root to shoot ratio for sequestration estimates.</div>
+        </div>
+        <h3>Limitations</h3>
+        <p>As the framework notes, gridded meteorological products run at 10 to 25 km and cannot resolve street-scale micro-climates shaped by building shadow and anthropogenic heat. The embedded dataset inherits that limit: treat the output as the data-driven starting palette for a site survey, not a substitute for one. The synthetic micro-DEM illustrates the layout logic; connecting a real survey DEM replaces it.</p>
+      </section>
+    </main>
+  </div>
+
+  <p class="colophon">Bengal Planting Atlas · framework by Sarthak Chatterjee, B.Arch, Jadavpur University · every generated palette is kept in the project archive · <a href="archive.html">Open the archive</a></p>
+</div>
+
+<section class="contact" id="contact">
+  <div class="contact-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="contact-inner reveal">
+    <p class="eyebrow">Contact</p>
+    <h2>Sarthak Chatterjee</h2>
+    <p class="contact-role">B.Arch, final year, Jadavpur University, Kolkata. Author of the algorithmic planting framework behind this atlas.</p>
+    <p class="contact-lede">For research collaboration, site studies or questions about the method, get in touch on LinkedIn.</p>
+    <a class="btn big linkedin" href="https://www.linkedin.com/in/sarthak-chatterjee-937092318/" target="_blank" rel="noopener noreferrer">
+      <span>Connect on LinkedIn</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 L17 7 M9 7 H17 V15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <p class="contact-url mono">linkedin.com/in/sarthak-chatterjee-937092318</p>
+  </div>
+  <p class="copyright">© Sarthak Chatterjee, 2026</p>
+</section>

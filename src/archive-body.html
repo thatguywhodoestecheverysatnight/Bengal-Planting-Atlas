@@ -1,0 +1,60 @@
+<canvas id="fxcanvas" class="fxcanvas" aria-hidden="true"></canvas>
+<header class="topbar scrolled" id="topbar">
+  <div class="progress" id="progress"></div>
+  <a class="brand" href="./" aria-label="Back to the Bengal Planting Atlas">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29 C16 22 16 17 16 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M16 17 C9 16 6 11 6 5 C12 5 16 9 16 17Z" fill="currentColor" opacity=".85"/><path d="M16 14 C22 13 26 9 26 3 C20 3 16 7 16 14Z" fill="currentColor" opacity=".6"/></svg>
+    <span>Bengal Planting Atlas</span>
+  </a>
+  <nav class="nav" aria-label="Archive"><a href="./">Atlas</a><a class="on" href="archive.html">Archive</a></nav>
+  <button type="button" class="place-btn" id="lockBtn" hidden>Lock archive</button>
+</header>
+
+<div class="wrap arc">
+  <section class="arc-hero">
+    <p class="kicker">Project archive</p>
+    <h1>Palette archive</h1>
+    <p class="hero-lede">Every palette generated on the atlas, stored with the exact inputs, site profile, AHP weights, species rankings, layout figures, planting window and attached photos that produced it.</p>
+    <div class="setup" id="setup" hidden></div>
+  </section>
+
+  <section class="card gate" id="gate">
+    <h2>Enter the archive passcode</h2>
+    <p class="lede">The passcode is the ADMIN_TOKEN value set in the Vercel project settings.</p>
+    <form id="gateForm" class="gate-form" autocomplete="off">
+      <label class="sr" for="pass">Passcode</label>
+      <input id="pass" class="mono" type="password" placeholder="Passcode" required>
+      <button class="btn" type="submit">Unlock</button>
+    </form>
+    <p class="note" id="gateMsg" aria-live="polite"></p>
+  </section>
+
+  <section id="vault" hidden>
+    <div class="card arc-tools">
+      <div class="arc-filters">
+        <div class="field"><label for="fq">Search place, district or species</label><input id="fq" type="search" placeholder="e.g. Bidhannagar, Arjuna, Purulia"></div>
+        <div class="field"><label for="fd">District</label><select id="fd"><option value="">All districts</option></select></div>
+        <div class="field"><label for="ffrom">From</label><input id="ffrom" type="date"></div>
+        <div class="field"><label for="fto">To</label><input id="fto" type="date"></div>
+        <label class="chk"><input id="fphotos" type="checkbox"> With photos only</label>
+      </div>
+      <div class="arc-actions">
+        <span class="arc-count mono" id="count">0 runs</span>
+        <button class="btn sm ghost" type="button" id="exJson">Export JSON</button>
+        <button class="btn sm ghost" type="button" id="exCsv">Export CSV</button>
+      </div>
+    </div>
+    <div class="arc-list" id="list" aria-live="polite"></div>
+    <div class="arc-more"><button class="btn sm" type="button" id="more" hidden>Load more</button></div>
+  </section>
+</div>
+
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer-scrim" id="scrim"></div>
+  <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="dTitle">
+    <div class="drawer-head">
+      <div><p class="eyebrow" id="dWhen"></p><h2 id="dTitle"></h2><p class="place-detail" id="dSub"></p></div>
+      <button type="button" class="place-btn" id="dClose" aria-label="Close">Close</button>
+    </div>
+    <div class="drawer-body" id="dBody"></div>
+  </aside>
+</div>

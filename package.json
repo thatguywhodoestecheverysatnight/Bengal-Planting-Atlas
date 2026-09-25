@@ -1,0 +1,19 @@
+{
+  "name": "bengal-planting-atlas",
+  "version": "1.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Algorithmic species suitability for West Bengal landscapes, with a Neon Postgres archive of every generated palette.",
+  "scripts": {
+    "build:site": "python3 tools/build.py",
+    "test": "node tools/test-api.mjs && node tools/test-engine.cjs"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0",
+    "@vercel/blob": "^1.0.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.2.0"
+  }
+}
